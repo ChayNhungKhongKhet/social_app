@@ -1,0 +1,31 @@
+{% load static %}
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <meta name="htmx-config" content='{"code":"200", "swap":true}, {"code":"400", "swap":true}'> -->
+  <title>My Social App</title>
+  {% comment %} {% tailwind_preload_css %} {% endcomment %}
+  {% tailwind_css %}
+  <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+  <link rel="icon" href="{% static 'logo.ico' %}" type="image/x-icon">
+  <script src="{% static 'htmx.min.js' %}" defer></script>
+  <script src="{% static 'js/common/common.js' %}" defer></script> <!-- defer is load after all html constructed -->
+  <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+  {% block head %}{% endblock %}
+</head>
+
+<body class="flex flex-col min-h-screen bg-background h-full">
+
+  {% block main %}
+
+  {% endblock %}
+    
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<form class="space-y-6 bg-white p-6 rounded-lg shadow-md" method="POST" hx-post="{% url 'users:login' %}"
+    hx-target="#login-container" hx-swap="innerHTML">
+
+    {% csrf_token %}
+    <div>
+        <label for="{{form.email.id_for_label}}"
+            class="block text-sm font-medium leading-6 text-gray-900">{{form.email.label}}</label>
+        <div class="mt-2">
+            <input id="{{form.email.id_for_label}}" name="email" type="email" autocomplete="email" required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6"
+                style="border-color: var(--secondary-color);">
+        </div>
+    </div>
+
+    <div>
+        <div class="flex items-center justify-between">
+            <label for="{{form.password.id_for_label}}"
+                class="block text-sm font-medium leading-6 text-gray-900">{{form.password.label}}</label>
+            <div class="text-sm">
+                <a href="{% url 'users:password_reset' %}" class="font-semibold text-accent hover:text-highlight">Forgot password?</a>
+            </div>
+        </div>
+        <div class="mt-2">
+            <input id="{{form.password.id_for_label}}" name="password" type="password" autocomplete="current-password"
+                required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6"
+                style="border-color: var(--secondary-color);">
+            {% if errors %}
+            <small class="error text-red-500 text-xs italic">{{ errors }}</small>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <button type="submit""
+            class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-highlight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            Sign in
+        </button>
+    </div>
+</form>
+
+<p class="mt-10 text-center text-sm text-gray-500" hx-boost="true">
+    You don't have an account?
+    <a href="{% url 'users:register' %}" class="font-semibold leading-6 text-accent hover:text-highlight">Register
+        now</a>
+</p>
+
+
+{% include 'users/login/login.js.html' %}

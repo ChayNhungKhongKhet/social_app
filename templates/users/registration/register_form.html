@@ -1,0 +1,64 @@
+<form id="registration-form" class="space-y-6 bg-white p-6 rounded-lg shadow-md" method="POST"
+    hx-post="{% url 'users:register' %}" hx-target="#content-container" hx-swap="innerHTML">
+    {% csrf_token %}
+    <div>
+        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium leading-6 text-gray-900">Email
+            address</label>
+        <div class="mt-2">
+            <input id="{{ form.email.id_for_label }}" name="email" type="email" required
+                class="mb-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6"
+                style="border-color: var(--secondary-color);" hx-trigger="input" hx-target="#email-error"
+                hx-swap="outerHTML">
+            {% if form.email.errors %}
+            <small id="email-error" class="error text-red-500 text-xs italic">{{ form.email.errors }}</small>
+            <small style="display: none;" class="help text-gray-400">{{ form.email.help_text|safe }}</small>
+            {% else %}
+            <small class="help text-gray-400">{{ form.email.help_text|safe }}</small>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <label for="{{ form.password1.id_for_label }}"
+            class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+        <div class="mt-2">
+            <input id="{{ form.password1.id_for_label }}" name="password1" type="password" required
+                class="mb-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6"
+                style="border-color: var(--secondary-color);" hx-trigger="input" hx-target="#password1-error"
+                hx-swap="outerHTML">
+            {% if form.password1.errors %}
+            <small id="password1-error" class="error text-red-500 text-xs italic">{{ form.password1.errors }}</small>
+            <small style="display: none;" class="help text-gray-400">{{ form.password1.help_text|safe }}</small>
+            {% else %}
+            <small class="help text-gray-400">{{ form.password1.help_text|safe }}</small>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium leading-6 text-gray-900">Confirm
+            Password</label>
+        <div class="mt-2">
+            <input id="{{ form.password2.id_for_label }}" name="password2" type="password" required
+                class="mb-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6"
+                style="border-color: var(--secondary-color);" hx-trigger="input" hx-target="#password2-error"
+                hx-swap="outerHTML">
+            {% if form.password2.errors %}
+            <small id="password2-error" class="error text-red-500 text-xs italic">{{ form.password2.errors }}</small>
+            <small style="display: none;" class="help text-gray-400">{{ form.password2.help_text|safe }}</small>
+            {% else %}
+            <small class="help text-gray-400">{{ form.password2.help_text|safe }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <button type="submit" hx-indicator
+            class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-highlight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Register</button>
+    </div>
+</form>
+<p class="mt-10 text-center text-sm text-gray-500" hx-boost="true">
+    Already have an account?
+    <a href="{% url 'users:login' %}" class="font-semibold leading-6 text-accent hover:text-highlight">Sign in</a>
+</p>
+
+{% include 'users/registration/register.js.html' %}
