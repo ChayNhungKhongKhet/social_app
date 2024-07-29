@@ -1,11 +1,33 @@
 function showHelpRemoveError(inputElement) {
   inputElement.addEventListener("input", function () {
-    let helpElement = this.nextElementSibling.nextElementSibling;
-    if (helpElement && helpElement.classList.contains("help")) {
+    // Initialize variables for help and error elements
+    let helpElement = null;
+    let errorElement = null;
+
+    // Find the next element sibling
+    let nextElement = this.nextElementSibling;
+    // Loop through the next elements to find help or error elements
+    while (nextElement) {
+      if (nextElement.classList.contains("help")) {
+        helpElement = nextElement;
+      }
+      if (nextElement.classList.contains("error")) {
+        errorElement = nextElement;
+      }
+      // Exit the loop if both help and error elements are found
+      if (helpElement && errorElement) {
+        break;
+      }
+      nextElement = nextElement.nextElementSibling;
+    }
+
+    // Display help element if found
+    if (helpElement) {
       helpElement.style.display = "block";
     }
-    let errorElement = this.nextElementSibling;
-    if (errorElement && errorElement.classList.contains("error")) {
+
+    // Remove error element if found
+    if (errorElement) {
       errorElement.remove();
     }
   });

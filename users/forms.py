@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import get_user_model
 from django import forms
 from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
 
 
 User = get_user_model()
@@ -13,6 +14,11 @@ import logging
 logger = logging.getLogger('users')
 
 class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={"autocomplete": "email"}),
+        help_text= _("Enter your email account address. We will send you a link to reset your password.")
+    )
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

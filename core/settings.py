@@ -156,6 +156,14 @@ DEFAULT_FROM_EMAIL = "Social_app"
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 6  # 24 hours
 
 LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = "users:login"
+LOGOUT_REDIRECT_URL = "users:login"
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+GOOGLE_CLIENT_ID = str(os.getenv("GOOGLE_CLIENT_ID"))
+GOOGLE_CLIENT_SECRET = str(os.getenv("GOOGLE_CLIENT_SECRET"))
+GOOGLE_REDIRECT_URI = str(os.getenv("GOOGLE_REDIRECT_URI"))
 
 LOGGING = {
     "version": 1,

@@ -17,7 +17,8 @@
             <label for="{{form.password.id_for_label}}"
                 class="block text-sm font-medium leading-6 text-gray-900">{{form.password.label}}</label>
             <div class="text-sm">
-                <a href="{% url 'users:password_reset' %}" class="font-semibold text-accent hover:text-highlight">Forgot password?</a>
+                <a href="{% url 'users:password_reset' %}" class="font-semibold text-accent hover:text-highlight">Forgot
+                    password?</a>
             </div>
         </div>
         <div class="mt-2">
@@ -33,12 +34,28 @@
 
     <div>
         <button type="submit""
-            class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-highlight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            class=" flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6
+            text-white shadow-sm hover:bg-highlight focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2 focus-visible:outline-primary">
             Sign in
         </button>
     </div>
 </form>
 
+<div class="flex justify-center">
+    <div class="flex items-center justify-center gap-2">
+        <p class="text-sm">Or login with</p>
+        <a href="{% url 'users:google_login' %}"
+            class="flex items-center justify-center rounded-md bg-gray-100 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm hover:bg-gray-200 sm:text-sm sm:leading-6">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 1.073 0 2.12-.617 2.986-1.786C16.492 21.693 18.914 22.717 21 22.717 22.586 22.717 24 21.414 24 19.586 22.717 17.09 21.693 14.508 20 12 20c-5.523 0-10-4.477-10-10 0-1.073.617-2.12 1.786-2.986C3.523 6.477 6.927 2 12 2zM13 16c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7z">
+                </path>
+            </svg>
+            <span class="hidden sm:block">Google</span>
+        </a>
+    </div>
+</div>
 <p class="mt-10 text-center text-sm text-gray-500" hx-boost="true">
     You don't have an account?
     <a href="{% url 'users:register' %}" class="font-semibold leading-6 text-accent hover:text-highlight">Register

@@ -1,6 +1,5 @@
 import logging
 
-from django.forms import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -8,7 +7,13 @@ from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
+import requests
+import json
+from urllib.parse import urlencode
 
 from .forms import CustomUserCreationForm, LoginForm, CustomPasswordResetForm
 from .common.common import is_htmx
@@ -16,6 +21,50 @@ from .common.common import is_htmx
 # Create your views here.
 
 logger = logging.getLogger("users")
+User = get_user_model()
+
+
+class GoogleLoginView(View):
+    def get(self, request):
+        google_auth_url = "https://accounts.google.com/o/oauth2/auth"
+        params = {
+            "client_id": settings.GOOGLE_CLIENT_ID,
+            "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+            "response_type": "code",
+            "scope": "openid email",
+        }
+        url = f"{google_auth_url}?{urlencode(params)}"
+        return HttpResponseRedirect(url)
+
+
+class GoogleOAuth2CallbackView(View):
+    def get(self, request):
+        code = request.GET.get("code")
+        token_url = "https://oauth2.googleapis.com/token"
+        token_data = {
+            "code": code,
+            "client_id": settings.GOOGLE_CLIENT_ID,
+            "client_secret": settings.GOOGLE_CLIENT_SECRET,
+            "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+            "grant_type": "authorization_code",
+        }
+        token_response = requests.post(token_url, data=token_data)
+        token_json = token_response.json()
+        access_token = token_json.get("access_token")
+        user_info_url = "https://www.googleapis.com/oauth2/v1/userinfo"
+        user_info_response = requests.get(
+            user_info_url, params={"access_token": access_token}
+        )
+        user_info = user_info_response.json()
+
+        email = user_info.get("email")
+        user, created = User.objects.get_or_create(email=email)
+        if created:
+            user.set_unusable_password()
+            user.save()
+
+        login(request, user)
+        return HttpResponseRedirect(reverse_lazy("index"))
 
 
 class LoginView(View):
@@ -48,16 +97,24 @@ class LoginView(View):
                 if _is_htmx:
                     status = 400
                     return JsonResponse(
-                        {"html": render_to_string("users/login/_form.html", context)},
+                        {
+                            "html": render_to_string(
+                                "users/login/_form.html", context, self.request
+                            )
+                        },
                         status=status,
                     )
-                return render(request, self.template_name, context, status=status)
+                return render(request, self.template_name, context)
         else:
             context = {"form": form, "errors": "Form is not valid"}
             if _is_htmx:
                 status = 400
                 return JsonResponse(
-                    {"html": render_to_string("users/login/_form.html", context)},
+                    {
+                        "html": render_to_string(
+                            "users/login/_form.html", context, self.request
+                        )
+                    },
                     status=status,
                 )
             return render(request, self.template_name, context, status=status)
@@ -73,7 +130,11 @@ class RegisterView(CreateView):
         if is_htmx(self.request):
             context = {"form": form}
             return JsonResponse(
-                {"html": render_to_string("users/registration/register_form.html", context)},
+                {
+                    "html": render_to_string(
+                        "users/registration/register_form.html", context, self.request
+                    )
+                },
                 status=status,
             )
         else:
