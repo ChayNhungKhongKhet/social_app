@@ -9,5 +9,6 @@ urlpatterns = [
     path("", HomeView.as_view(), name="index"),
     path("home/", HomeView.as_view(), name="index"),
     path("users/", include("users.urls")),
+    path("profiles/", include("profiles.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
