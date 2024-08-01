@@ -1,0 +1,18 @@
+<script>
+    function toggleModal() {
+        let modal = document.getElementById('updateProfileModal');
+        modal.classList.toggle('hidden');
+    }
+
+    function closeModal() {
+        let modal = document.getElementById('updateProfileModal');
+        modal.classList.add('hidden');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("input.datepicker", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+        });
+    });
+</script>

@@ -14,8 +14,23 @@ class ProfileCreateForm(forms.ModelForm):
     sex = forms.ChoiceField(
         widget=forms.RadioSelect,
         choices=Profile.Sex.choices,
-        )
+    )
 
     class Meta:
         model = Profile
         fields = ("first_name", "last_name", "sex", "birthdate")
+
+
+class ProfileUpdateForm(ProfileCreateForm):
+
+    class Meta:
+        model = Profile
+        fields = (
+            "first_name",
+            "last_name",
+            "sex",
+            "birthdate",
+            "bio",
+            "avatar",
+            "cover_image",
+        )

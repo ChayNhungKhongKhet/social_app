@@ -52,15 +52,15 @@ class GoogleOAuth2CallbackView(View):
         )
         user_info = user_info_response.json()
 
-        print(user_info)
 
-        user = self._get_or_create_user(user_info.get("email"))
-        self._create_profile(
-            user,
-            user_info.get("given_name"),
-            user_info.get("family_name"),
-            user_info.get("picture"),
-        )
+        user, created = self._get_or_create_user(user_info.get("email"))
+        if created:
+            self._create_profile(
+                user,
+                user_info.get("given_name"),
+                user_info.get("family_name"),
+                user_info.get("picture"),
+            )
         login(request, user)
         return HttpResponseRedirect(reverse_lazy("index"))
 
@@ -91,7 +91,7 @@ class GoogleOAuth2CallbackView(View):
         if created:
             user.set_unusable_password()
             user.save()
-        return user
+        return user, created
 
 
 class LoginView(View):
