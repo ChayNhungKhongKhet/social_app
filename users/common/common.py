@@ -9,4 +9,4 @@ def is_htmx(request):
         bool: True if the request is an HTMX request, False otherwise.
     """
 
-    return request.headers.get('HX-Request', False)
+    return True if request.META.get('HTTP_HX_REQUEST') else False

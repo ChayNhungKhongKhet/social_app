@@ -43,9 +43,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "tailwind",
+    "crispy_forms",
+    "crispy_tailwind",
     "theme",
     "django_browser_reload",
     "home",
+    "profiles",
 ]
 
 MIDDLEWARE = [
@@ -126,8 +129,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directory where uploaded media is saved.
+MEDIA_URL = '/media/' # Public URL at the browser
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -164,6 +170,9 @@ LOGOUT_REDIRECT_URL = "users:login"
 GOOGLE_CLIENT_ID = str(os.getenv("GOOGLE_CLIENT_ID"))
 GOOGLE_CLIENT_SECRET = str(os.getenv("GOOGLE_CLIENT_SECRET"))
 GOOGLE_REDIRECT_URI = str(os.getenv("GOOGLE_REDIRECT_URI"))
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
 
 LOGGING = {
     "version": 1,

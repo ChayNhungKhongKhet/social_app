@@ -1,3 +1,5 @@
+{% load static %}
+
 <form class="space-y-6 bg-white p-6 rounded-lg shadow-md" method="POST" hx-post="{% url 'users:login' %}"
     hx-target="#login-container" hx-swap="innerHTML">
 
@@ -42,17 +44,12 @@
     </div>
 </form>
 
-<div class="flex justify-center">
+<div class="flex justify-center mt-2">
     <div class="flex items-center justify-center gap-2">
         <p class="text-sm">Or login with</p>
         <a href="{% url 'users:google_login' %}"
             class="flex items-center justify-center rounded-md bg-gray-100 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm hover:bg-gray-200 sm:text-sm sm:leading-6">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path fill-rule="evenodd"
-                    d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 1.073 0 2.12-.617 2.986-1.786C16.492 21.693 18.914 22.717 21 22.717 22.586 22.717 24 21.414 24 19.586 22.717 17.09 21.693 14.508 20 12 20c-5.523 0-10-4.477-10-10 0-1.073.617-2.12 1.786-2.986C3.523 6.477 6.927 2 12 2zM13 16c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7z">
-                </path>
-            </svg>
-            <span class="hidden sm:block">Google</span>
+            <img class="h-4 w-4" src="{% static 'fontawesome/svgs/brands/google-plus.svg' %}" alt="google logo">
         </a>
     </div>
 </div>

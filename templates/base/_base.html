@@ -13,7 +13,9 @@
   {% comment %} {% tailwind_preload_css %} {% endcomment %}
   {% tailwind_css %}
   <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/flatpickr.min.css' %}">
   <link rel="icon" href="{% static 'logo.ico' %}" type="image/x-icon">
+  <script src="{% static 'js/flatpickr.min.js' %}" defer></script>
   <script src="{% static 'htmx.min.js' %}" defer></script>
   <script src="{% static 'js/common/common.js' %}" defer></script> <!-- defer is load after all html constructed -->
   <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
@@ -25,7 +27,7 @@
   {% block main %}
 
   {% endblock %}
-    
+
 </body>
 
 </html>
